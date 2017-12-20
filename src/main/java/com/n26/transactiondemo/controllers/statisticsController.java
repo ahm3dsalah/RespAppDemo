@@ -1,8 +1,8 @@
 package com.n26.transactiondemo.controllers;
 
+import com.n26.transactiondemo.cacheServices.TransactionCacheService;
+import com.n26.transactiondemo.constants.CacheConstants;
 import com.n26.transactiondemo.models.TransactionSummaryResponseModel;
-import com.n26.transactiondemo.services.StatisticsServices;
-import org.omg.IOP.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class statisticsController {
 
     @Autowired
-    StatisticsServices statisticsServices;
+    TransactionCacheService transactionCacheService;
 
     @RequestMapping(method = RequestMethod.GET)
     public TransactionSummaryResponseModel getTransactionsSummary(){
-        return statisticsServices.getTransactionsSummary();
+        return transactionCacheService.get(CacheConstants.SUMMARY_CACHE_ID);
     }
 }

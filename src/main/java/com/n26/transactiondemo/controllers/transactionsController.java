@@ -23,7 +23,7 @@ public class transactionsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public void  addTransaction(@RequestBody @Validated TransactionCreateModel transactionCreateModel) throws Exception {
+    public void  addTransaction(@RequestBody @Validated TransactionCreateModel transactionCreateModel) {
         transactionServices.addTransaction(transactionCreateModel);
     }
 }

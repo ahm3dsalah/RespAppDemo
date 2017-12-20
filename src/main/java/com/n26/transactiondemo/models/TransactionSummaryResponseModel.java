@@ -5,30 +5,21 @@ package com.n26.transactiondemo.models;
  */
 public class TransactionSummaryResponseModel {
 
-    private final double sum;
-    private final double avg;
-    private final double min;
-    private final double max;
-    private final double count;
+    private double sum = 0;
+    private double avg = 0;
+    private double min = 0;
+    private double max = 0;
+    private double count = 0;
 
-    private static TransactionSummaryResponseModel instance = new TransactionSummaryResponseModel(0,0,0,0,0);
+    public TransactionSummaryResponseModel() {
 
-    private TransactionSummaryResponseModel(double sum, double avg, double min, double max, double count) {
+    }
+    public TransactionSummaryResponseModel(double sum, double avg, double min, double max, double count) {
         this.sum = sum;
         this.avg = avg;
         this.min = min;
         this.max = max;
         this.count = count;
-    }
-
-    public static synchronized  TransactionSummaryResponseModel getInstance() {
-        return instance;
-    }
-
-
-    public static synchronized TransactionSummaryResponseModel createTransactionSummary(double sum, double avg, double min, double max, double count) {
-        instance = new TransactionSummaryResponseModel(sum, avg, min, max, count);
-        return instance;
     }
 
     public double getSum() {

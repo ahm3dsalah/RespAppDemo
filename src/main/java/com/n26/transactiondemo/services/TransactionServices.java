@@ -20,7 +20,7 @@ public class TransactionServices {
 
     @Autowired
     AsyncServices asyncService;
-    public void addTransaction(TransactionCreateModel transactionCreateModel) throws Exception {
+    public void addTransaction(TransactionCreateModel transactionCreateModel) {
 
         long currentMill = System.currentTimeMillis();
         long diff = 1000 * 60;

@@ -1,8 +1,12 @@
 package com.n26.transactiondemo.services;
 
 import com.n26.transactiondemo.DBSimulation.TransactionDB;
+import com.n26.transactiondemo.cacheServices.TransactionCacheService;
+import com.n26.transactiondemo.constants.CacheConstants;
 import com.n26.transactiondemo.domain.Transaction;
 import com.n26.transactiondemo.models.TransactionSummaryResponseModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +21,11 @@ public class AsyncServices {
     TransactionDB transactionDB = TransactionDB.getInstance();
 
 
+    @Autowired
+    TransactionCacheService transactionCacheService;
     // Run asyc to calculate summary whenever a new transaction is added
     @Async
-    public void calculateTransactionSummary() throws Exception {
+    public void calculateTransactionSummary() {
 
         // the code to calculate summary
 
@@ -54,6 +60,8 @@ public class AsyncServices {
             count++;
         }
         avg = sum / count;
-        TransactionSummaryResponseModel transactionSummaryResponseModel = TransactionSummaryResponseModel.createTransactionSummary(sum, avg, min, max, count);
+
+        // this will be cached every Time
+        transactionCacheService.putSummary(new TransactionSummaryResponseModel(sum, avg, min, max, count), CacheConstants.SUMMARY_CACHE_ID);
     }
 }
